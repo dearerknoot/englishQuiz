@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz de 7 Perguntas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f7f7f7;
+            background-size: cover;
+            background-image: url('https://static.vecteezy.com/system/resources/previews/036/597/046/non_2x/ai-generated-english-class-advertisment-background-with-copy-space-free-photo.jpg');
+        }
+
+
+
+
+        .quiz-container {
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+
+
+
+        .question {
+            font-size: 50px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            -webkit-text-stroke: 2px rgb(255, 255, 255);
+        }
+
+
+
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+
+
+
+        button {
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 20px;
+        }
+
+
+
+
+        .result {
+            margin-top: 20px;
+            font-size: 30px;
+            font-weight: 600;
+            -webkit-text-stroke: 1px rgb(255, 255, 255);
+        }
+
+
+
+
+        .answer-btn.correct {
+            background-color: green;
+            color: white;
+        }
+
+
+
+
+        .answer-btn.incorrect {
+            background-color: red;
+            color: white;
+        }
+        .blockClick{
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+
+
+
+    <div class="quiz-container">
+        <div id="question-container">
+            <div class="question" id="question-text"></div>
+            <div class="button-container">
+                <button class="answer-btn" id="answer-1" onclick="checkAnswer(1)"></button>
+                <button class="answer-btn" id="answer-2" onclick="checkAnswer(2)"></button>
+                <button class="answer-btn" id="answer-3" onclick="checkAnswer(3)"></button>
+                <!-- <button class="answer-btn" id="answer-4" onclick="checkAnswer(4)"></button> -->
+            </div>
+        </div>
+
+
+
+
+        <div id="result-container" class="result" style="display: none;"></div>
+    </div>
+
+
+
+
+    <script>
+        const questions = [
+            {
+                question: "Last week I bought pasta and tomatoes.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 1
+            },
+            {
+                question: "It will rain tomorrow.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 3
+            },
+            {
+                question: "They go to school.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 2
+            },
+            {
+                question: "I drink coffee every morning.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 2
+            },
+            {
+                question: "I changed my mind until I thought about it a bit",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 1
+            },
+            {
+                question: "We will go out tonight.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 3
+            },
+            {
+                question: "I am going to buy a gift for her.",
+                answers: ["Simple Past", "Simple Present", "Simple Future"],
+                correct: 3
+            }
+        ];
+
+
+
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+
+
+
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            document.getElementById('question-text').textContent = question.question;
+            document.getElementById('answer-1').textContent = question.answers[0];
+            document.getElementById('answer-2').textContent = question.answers[1];
+            document.getElementById('answer-3').textContent = question.answers[2];
+        }
+
+
+
+
+        function checkAnswer(answerIndex) {
+            const correctAnswer = questions[currentQuestionIndex].correct;
+
+
+
+
+            // Marca a resposta correta ou incorreta
+            const buttons = document.querySelectorAll('.answer-btn');
+            buttons.forEach((button, index) => {
+                if (index + 1 === correctAnswer) {
+                    button.classList.add('correct');
+                } else if (index + 1 === answerIndex) {
+                    button.classList.add('incorrect');
+                }
+            });
+
+
+
+
+            // Aumenta a pontuação se a resposta for correta
+            if (answerIndex === correctAnswer) {
+                score++;
+            }
+
+
+
+
+           
+            setTimeout(() => {
+               
+                buttons.forEach(button => {
+                    button.classList.remove('correct', 'incorrect');
+                });
+
+
+
+
+               
+                if (currentQuestionIndex < questions.length - 1) {
+                    currentQuestionIndex++;
+                    displayQuestion();
+                } else {
+                    showResult();
+                }
+            }, 3000);  
+        }
+
+
+
+
+        function showResult() {
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.style.display = 'block';
+            resultContainer.textContent = `Você acertou ${score} de ${questions.length} perguntas!`;
+            setTimeout(()=>{
+                window.location.href = 'index.html';
+            },3000)
+        }
+
+
+
+
+        // Exibe a primeira pergunta
+        displayQuestion();
+
+
+
+
+    </script>
+
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
